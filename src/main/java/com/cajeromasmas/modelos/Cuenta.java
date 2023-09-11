@@ -7,7 +7,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table
+@Table()
 public class Cuenta {
 
     @Id
