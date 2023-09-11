@@ -1,4 +1,7 @@
 package com.cajeromasmas.dao;
 
-public interface CuentaDao {
+
+
+@Respository
+public interface CuentaDao extends JpaRepository<Cuenta, Long>{
 }
