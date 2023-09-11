@@ -1,7 +1,12 @@
 package com.cajeromasmas.modelos;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Entity
+@Setter
+@Getter
 @Table
 public class Tarjeta {
     @Id
