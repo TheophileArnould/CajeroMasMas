@@ -31,4 +31,8 @@ public class CuentaServicio implements ICuentaServicio{
     public void delete(Long id) {
         cuentaDao.deleteById(id);
     }
+    @Override
+    public List<Cuenta> findByUsuarioId(Long user_id) {
+        return cuentaDao.findByUsuarioId(user_id);
+    }
 }
