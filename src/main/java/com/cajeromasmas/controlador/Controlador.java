@@ -10,7 +10,10 @@ import jakarta.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/api")
+import java.util.ArrayList;
+
+@RestController
+@RequestMapping("/api")
 public class Controlador {
     @Autowired
     private ICuentaServicio cuentaServicio;
@@ -24,13 +27,19 @@ public class Controlador {
     private Usuario usuario = null;
 
     @GetMapping("/usuario/{UsuarioId}")
-    public Usuario getUsuario(@PathVariable Long id){
-        usuario = usuarioServicio.findById(id);
-        return usuario;
+    public Usuario getUsuario(@PathVariable Long UsuarioId){
+        return usuarioServicio.findById(UsuarioId);
+        //return usuario;
+    }
+
+    @GetMapping("/usuario")
+    public ArrayList<Usuario> getUsuario(){
+        ArrayList<Usuario> usuarios  = (ArrayList<Usuario>) usuarioServicio.findAll();
+        return usuarios;
     }
 
     @PostMapping("/usuario")
-    public Usuario creatUsuario(@Valid @RequestBody Usuario usuario){
+    public Usuario creatUsuario(@RequestBody Usuario usuario){
         return usuarioServicio.save(usuario);
     }
 
