@@ -8,4 +8,5 @@ public interface ITarjetaServicio {
     public Tarjeta findById(Long id);
     public Tarjeta save(Tarjeta tarjeta);
     public void delete(Long id);
+    public List<Tarjeta> findByCuentaId(Long id);
 }

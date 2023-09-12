@@ -35,4 +35,9 @@ public class CuentaServicio implements ICuentaServicio{
     public List<Cuenta> findByUsuarioId(Long user_id) {
         return cuentaDao.findByUsuarioId(user_id);
     }
+
+    @Override
+    public Cuenta findByUsuarioIdAndId(Long usuarioId, Long cuentaId) {
+        return cuentaDao.findByUsuarioIdAndId(usuarioId, cuentaId);
+    }
 }

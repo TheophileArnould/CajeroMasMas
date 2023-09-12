@@ -31,4 +31,9 @@ public class TarjetaServicio implements ITarjetaServicio{
     public void delete(Long id) {
         tarjetaDao.deleteById(id);
     }
+
+    @Override
+    public List<Tarjeta> findByCuentaId(Long id) {
+        return tarjetaDao.findByCuentaId(id);
+    }
 }

@@ -9,4 +9,5 @@ public interface ICuentaServicio {
     public Cuenta save(Cuenta cuenta);
     public void delete(Long id);
     public List<Cuenta> findByUsuarioId(Long id);
+    public Cuenta findByUsuarioIdAndId(Long usuarioId, Long cuentaId);
 }

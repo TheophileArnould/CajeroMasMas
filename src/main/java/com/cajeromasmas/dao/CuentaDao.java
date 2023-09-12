@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CuentaDao extends JpaRepository<Cuenta, Long>{
     List<Cuenta> findByUsuarioId(Long usuarioId);
+    Cuenta findByUsuarioIdAndId(Long usuarioId, Long cuentaId);
 }
