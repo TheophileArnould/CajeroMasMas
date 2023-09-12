@@ -1,6 +1,7 @@
 package com.cajeromasmas.modelos;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,17 +11,24 @@ import lombok.Setter;
 @Table()
 public class Cuenta {
 
+    public enum TipoDeCuenta {
+        Corriente,
+        Ahorro
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    @JoinColumn(name = "Usuario_id")
-    private Long usuarioId;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @Column
+    @Min(0)
     private float  saldo;
 
     @Column
-    private String tipo;
+    private TipoDeCuenta tipo;
 }

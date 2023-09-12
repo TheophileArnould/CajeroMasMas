@@ -1,6 +1,7 @@
 package com.cajeromasmas.modelos;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,9 +14,9 @@ public class Tarjeta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    @JoinColumn(name = "Cuenta_id")
-    private Long CuentaID;
+    @ManyToOne
+    @JoinColumn(name = "cuenta_id")
+    private Cuenta cuenta;
 
     @Column
     private boolean  bloqueada;
@@ -24,8 +25,10 @@ public class Tarjeta {
     private boolean  sinContacto;
 
     @Column
+    @Size(min = 5, max = 6)
     private String numeroDeTajeta;
 
     @Column
+    @Size(min = 5, max = 6)
     private int CodigoDeTajetas;
 }
