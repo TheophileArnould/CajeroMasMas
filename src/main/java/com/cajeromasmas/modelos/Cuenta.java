@@ -5,17 +5,13 @@ import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Setter
 @Getter
 @Table()
 public class Cuenta {
-
-    public enum TipoDeCuenta {
-        Corriente,
-        Ahorro
-
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +26,5 @@ public class Cuenta {
     private float  saldo;
 
     @Column
-    private TipoDeCuenta tipo;
+    private String tipo;
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -32,25 +33,30 @@ public class Controlador {
 
     private Usuario usuario = null;
 
-    @GetMapping("/usuario/{UsuarioId}") //Conectarse a un usuario especifico
-    public Usuario getUsuario(@PathVariable Long UsuarioId) {
-        usuario = usuarioServicio.findById(UsuarioId);
-        return usuario;
+    @GetMapping("/usuario/Conecetarse/{UsuarioId}") //Conectarse a un usuario especifico
+    public ResponseEntity Connectarse(@PathVariable Long UsuarioId) {
+        try {
+            usuario = usuarioServicio.findById(UsuarioId);
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>("This user does not exists", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Usuario>(usuario,HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/usuario")
-    public ArrayList<Usuario> getUsuario() {
+    @GetMapping("/usuario")// get All usuarios
+    public ArrayList<Usuario> getAllUsuario() {
         ArrayList<Usuario> usuarios = (ArrayList<Usuario>) usuarioServicio.findAll();
         return usuarios;
     }
 
-    @PostMapping("/usuario")
+    @PostMapping("/usuario")// Create Usuario
     public Usuario creatUsuario(@RequestBody Usuario usuario) {
         return usuarioServicio.save(usuario);
     }
 
-    @GetMapping("/cuentas")
-    public ResponseEntity getCuentas() {
+    @GetMapping("/cuentas") // Get YourCuentas
+    public ResponseEntity getYourCuentas() {
         if (usuario != null) {
             return new ResponseEntity<ArrayList<Cuenta>>(
                     (ArrayList<Cuenta>) cuentaServicio.findByUsuarioId(usuario.getId()),
@@ -60,16 +66,64 @@ public class Controlador {
         return new ResponseEntity<String>("No se conectado a ningun usuario", HttpStatus.UNAUTHORIZED);
     }
 
-    @PostMapping("/cuenta")
+    @PostMapping("/cuentas/CreateCuenta")//Add you a cuenta
     public ResponseEntity addCuenta(@RequestBody Cuenta cuenta) {
+        List<String> TipoDeCuenta = List.of("Corriente", "Ahorro", "SuperAhorro");
+
         if (usuario != null) {
-            cuenta.setUsuarioId(usuario.getId());
-            return new ResponseEntity<Cuenta>(
-                    cuentaServicio.save(cuenta),
-                    HttpStatus.CREATED
+            if( TipoDeCuenta.contains(cuenta.getTipo())){// verify cuenta est de tipo : Corriente, Ahorro, SuperAhorro
+
+                    cuenta.setUsuario(usuario);
+                    cuenta.setSaldo(0);
+                    return new ResponseEntity<Cuenta>(
+                            cuentaServicio.save(cuenta),
+                            HttpStatus.CREATED
+                    );
+                }
+            else{
+                return new ResponseEntity<String>("tu cuenta no es de un tipo que existe", HttpStatus.EXPECTATION_FAILED);//no esta del bueno tipo
+            }
+        }
+        return new ResponseEntity<String>("No se conectado a ningun usuario", HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/tajeta") // Get YourCuentas
+    public ResponseEntity getTusTajetas() {
+
+        /**
+        if (usuario != null) {
+            return new ResponseEntity<ArrayList<Cuenta>>(
+                    (ArrayList<Cuenta>) cuentaServicio.findByUsuarioId(usuario.getId()),
+                    HttpStatus.OK
             );
         }
         return new ResponseEntity<String>("No se conectado a ningun usuario", HttpStatus.UNAUTHORIZED);
+         **/
+        return new ResponseEntity("no desarollado", HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @PostMapping("/tajeta")//Add you a cuenta
+    public ResponseEntity addTajetaACuenta(@RequestBody Cuenta cuenta) {
+        /**
+        List<String> TipoDeCuenta = List.of("Corriente", "Ahorro", "SuperAhorro");
+
+        if (usuario != null) {
+            if( TipoDeCuenta.contains(cuenta.getTipo())){// verify cuenta est de tipo : Corriente, Ahorro, SuperAhorro
+
+                cuenta.setUsuario(usuario);
+                cuenta.setSaldo(0);
+                return new ResponseEntity<Cuenta>(
+                        cuentaServicio.save(cuenta),
+                        HttpStatus.CREATED
+                );
+            }
+            else{
+                return new ResponseEntity<String>("tu cuenta no es de un tipo que existe", HttpStatus.EXPECTATION_FAILED);//no esta del bueno tipo
+            }
+        }
+        return new ResponseEntity<String>("No se conectado a ningun usuario", HttpStatus.UNAUTHORIZED);
+         **/
+        return new ResponseEntity("no desarollado", HttpStatus.SERVICE_UNAVAILABLE);
     }
 
 
